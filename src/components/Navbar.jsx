@@ -4,14 +4,23 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { MdMic, MdVideoCall, MdNotifications } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
-import imglogo from '../assets/image/youtube.png'
 
-const Navbar = () => {
+const Navbar = ({toggleSidebar}) => {
   const [userInitial, setUserInitial] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
 
+  // Fetch login data from localStorage on mount
+  // useEffect(() => {
+  //   const loginData = JSON.parse(localStorage.getItem("loginData"));
+  //   if (loginData) {
+  //     const firstLetter = loginData.username
+  //       ? loginData.username.charAt(0).toUpperCase()
+  //       : loginData.email.charAt(0).toUpperCase();
+  //     setUserInitial(firstLetter);
+  //   }
+  // }, []);
   useEffect(() => {
     const loginData = JSON.parse(localStorage.getItem("loginData"));
     if (loginData) {
@@ -45,13 +54,12 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="nav-left">
-        <HiMenu className="nav-icon" />
+        <HiMenu className="nav-icon" onClick={toggleSidebar} />
         <img 
-          src={imglogo}
+          src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" 
           alt="YouTube Logo" 
           className="yt-logo" 
         />
-        <h1 className="yt-logo-name-class">YouTube</h1>
         <span className="country-code">IN</span>
       </div>
       

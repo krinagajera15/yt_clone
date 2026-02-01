@@ -1,0 +1,15 @@
+/* Sidebar.css */
+.sidebar {
+  width: 200px;
+  height: 100vh;
+  background: #fff;
+  padding: 10px;
+}
+
+.mini-sidebar {
+  width: 60px;
+  height: 100vh;
+  background: #fff;
+  padding: 10px;
+  text-align: center;
+}
