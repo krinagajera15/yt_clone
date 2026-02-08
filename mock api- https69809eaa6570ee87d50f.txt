@@ -1,0 +1,1 @@
+mock api:- https://69809eaa6570ee87d50fd891.mockapi.io/:channelsdata
