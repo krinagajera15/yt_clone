@@ -1,41 +1,69 @@
+/* Sidebar Main Container */
+.sidebar {
+  width: 200px;
+  background-color: var(--bg-color); /* થીમ મુજબ બદલાશે */
+  height: calc(100vh - 56px);
+  position: sticky;
+  top: 56px;
+  color: var(--text-color); /* થીમ મુજબ બદલાશે */
+  padding-top: 12px;
+  border-right: 1px solid var(--border-color);
+
+}
+
 /* Individual Sidebar Item */
 .sidebar-item {
   display: flex;
   align-items: center;
   padding: 0 24px;
   height: 40px;
-  text-decoration: none; /* આ લિંકની નીચેની લીટી કાઢી નાખશે */
-  color: var(--text-color); /* લિંકનો કલર ટેક્સ્ટ જેવો રાખશે */
+  text-decoration: none;
+  color: var(--text-color);
   font-size: 14px;
   margin: 0 12px 4px 12px;
   border-radius: 10px;
   cursor: pointer;
-  transition: background 0.2s; /* સ્મૂધ ઇફેક્ટ માટે */
+  
 }
 
-/* Active Class - React Router આ ક્લાસ ઓટોમેટિક લગાડશે */
+/* Hover Effect - થીમ પ્રમાણે બદલાશે */
+.sidebar-item:hover {
+  background-color: var(--hover-bg);
+}
+
+/* Active Class - જે આઈટમ અત્યારે ખુલેલી હોય તેના માટે */
 .sidebar-item.active {
   background-color: var(--hover-bg);
   font-weight: 600;
 }
-
-/* જ્યારે active હોય ત્યારે આઇકોનનો કલર બદલવા માટે */
-.sidebar-item.active .s-icon {
-  color: var(--text-color); 
+a{
+  text-decoration: none;
 }
 
-/* Hover Effect */
-.sidebar-item:hover {
-  background-color: var(--hover-bg);
+/* Icons Style */
+.s-icon {
+  margin-right: 24px;
+  font-size: 22px;
+  color: var(--icon-color); /* Variables માંથી કલર લેશે */
 }
-/* પ્રોફાઇલ આઇટમ માટે ખાસ સ્ટાઇલ (જો જરૂર હોય તો) */
-.sidebar-profile {
+
+/* Sidebar Title (You >) */
+.sidebar-title {
+  padding: 10px 24px;
   font-size: 16px;
-  margin-top: 4px;
-  margin-bottom: 8px;
+  font-weight: bold;
+  color: var(--text-color);
 }
 
-/* આઇકોનનો કલર જો અલગ રાખવો હોય તો */
-.sidebar-profile .s-icon {
-  font-size: 24px; /* પ્રોફાઇલ આઇકોન થોડો મોટો દેખાશે */
+/* Horizontal Line (Divider) */
+hr {
+  border: 0;
+  border-top: 1px solid var(--border-color);
+  margin: 12px 0;
+}
+
+/* Text and Icon inside item during hover */
+.sidebar-item:hover .span,
+.sidebar-item:hover .s-icon {
+  color: var(--hover-text);
 }

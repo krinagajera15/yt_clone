@@ -1,22 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
+import { useParams, Link, useLocation, useNavigate } from "react-router-dom";
 import "./Watch.css";
-import { MdThumbUpOffAlt, MdThumbDownOffAlt, MdNotificationsNone, MdShare, MdPlaylistAdd, MdClose } from "react-icons/md";
+import {
+  MdThumbUpOffAlt,
+  MdThumbDownOffAlt,
+  MdShare,
+  MdPlaylistAdd,
+  MdDownload,
+  MdNotificationsActive, // સબસ્ક્રાઇબ માટે ઘંટડી
+} from "react-icons/md";
 import { v4 as uuidv4 } from "uuid";
 
 const Watch = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
-  
   const [video, setVideo] = useState(null);
   const [videos, setVideos] = useState([]);
   const [error, setError] = useState("");
-  const [isSubscribed, setIsSubscribed] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false); // Modal state
+  const [showMenu, setShowMenu] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false); // સબસ્ક્રિપ્શન સ્ટેટ
+  const location = useLocation();
 
-  // લોગિન ડેટા ચેક કરવા માટે
+  // લોગિન થયેલા યુઝરનો ડેટા મેળવો
   const loginData = JSON.parse(localStorage.getItem("loginData"));
+  const userEmail = loginData ? loginData.email : null;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,12 +33,15 @@ const Watch = () => {
         const videoData = await resVideo.json();
         setVideo(videoData);
 
-        // સબ્સ્ક્રિપ્શન સ્ટેટ ચેક કરો
-        const savedSubs = JSON.parse(localStorage.getItem("subscribedChannels")) || [];
-        const alreadySubscribed = savedSubs.some(item => item.id === videoData.id);
-        setIsSubscribed(alreadySubscribed);
+        // ચેક કરો કે આ યુઝરે આ ચેનલ સબસ્ક્રાઇબ કરી છે?
+        if (userEmail) {
+          const allSubs = JSON.parse(localStorage.getItem("subscribedChannels")) || {};
+          const userSubs = allSubs[userEmail] || [];
+          const alreadySub = userSubs.some((v) => v.id === videoData.id);
+          setIsSubscribed(alreadySub);
+        }
 
-        const resAll = await fetch(`https://697343e3b5f46f8b5826ae3f.mockapi.io/videos`);
+        const resAll = await fetch("https://697343e3b5f46f8b5826ae3f.mockapi.io/videos");
         const allData = await resAll.json();
         setVideos(allData.filter((v) => v.id !== id));
         setError("");
@@ -41,30 +51,51 @@ const Watch = () => {
     };
     fetchData();
     window.scrollTo(0, 0);
-  }, [id]);
+  }, [id, userEmail]);
 
   const handleSubscribe = () => {
-    // જો યુઝર લોગિન નથી, તો મોડલ બતાવો
     if (!loginData) {
-      setShowLoginModal(true);
+      alert("Please login to subscribe!");
+      navigate("/login");
       return;
     }
 
-    let savedSubs = JSON.parse(localStorage.getItem("subscribedChannels")) || [];
+    let allSubs = JSON.parse(localStorage.getItem("subscribedChannels")) || {};
+    let userSubs = allSubs[userEmail] || [];
 
     if (isSubscribed) {
-      savedSubs = savedSubs.filter(item => item.id !== video.id);
+      // Unsubscribe: લિસ્ટમાંથી રિમૂવ કરો
+      userSubs = userSubs.filter((v) => v.id !== video.id);
+      setIsSubscribed(false);
     } else {
-      const newSub = {
+      // Subscribe: લિસ્ટમાં એડ કરો
+      userSubs.push({
         id: video.id,
-        channel: video.channel || "Unknown Channel",
-        channelImage: video.channelImage
-      };
-      savedSubs.push(newSub);
+        channel: video.channel,
+        channelImage: video.channelImage,
+        thumbnail: video.thumbnail,
+        title: video.title
+      });
+      setIsSubscribed(true);
     }
 
-    localStorage.setItem("subscribedChannels", JSON.stringify(savedSubs));
-    setIsSubscribed(!isSubscribed);
+    allSubs[userEmail] = userSubs;
+    localStorage.setItem("subscribedChannels", JSON.stringify(allSubs));
+  };
+
+  const getYouTubeID = (url) => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return match && match[2].length === 11 ? match[2] : null;
+  };
+
+  const handleDownload = () => {
+    const videoId = getYouTubeID(video.url);
+    if (videoId) {
+      const downloadUrl = `https://en.savefrom.net/1-youtube-video-downloader-380/?url=https://www.youtube.com/watch?v=${videoId}`;
+      window.open(downloadUrl, "_blank");
+      setShowMenu(false);
+    }
   };
 
   if (error) return <div className="watch-page error-text">{error}</div>;
@@ -73,27 +104,29 @@ const Watch = () => {
   return (
     <div className="watch-container">
       <div className="watch-main">
-        {/* Video Player */}
         <div className="video-container">
           <iframe src={video.url} title={video.title} frameBorder="0" allowFullScreen></iframe>
         </div>
 
-        {/* Video Info */}
         <div className="video-details">
           <h1 className="watch-title">{video.title}</h1>
           <div className="video-actions-row">
             <div className="channel-info">
-              <img src={video.channelImage || "https://via.placeholder.com/40"} className="channel-avatar-img" alt="channel" />
+              <img src={video.channelImage || "https://via.placeholder.com/40"} className="channel-avatar-img" alt="logo" />
               <div>
-                <p className="channel-name">{video.channel || "Channel Name"}</p>
+                <p className="channel-name">{video.channel}</p>
                 <p className="sub-count">1.2M subscribers</p>
               </div>
+              
+              {/* Subscribe Button with Bell Icon */}
               <button 
                 className={`subscribe-btn ${isSubscribed ? "subscribed" : ""}`} 
                 onClick={handleSubscribe}
               >
                 {isSubscribed ? (
-                  <>Subscribed <MdNotificationsNone size={20} style={{ marginLeft: "8px" }} /></>
+                  <>
+                    Subscribed <MdNotificationsActive size={18} style={{ marginLeft: "5px" }} />
+                  </>
                 ) : (
                   "Subscribe"
                 )}
@@ -107,27 +140,36 @@ const Watch = () => {
                 <button><MdThumbDownOffAlt size={20} /></button>
               </div>
               <button><MdShare size={20} /> Share</button>
+
+              <div className="download-wrapper">
+                <button className="download-btn" onClick={() => setShowMenu(!showMenu)}>
+                  <MdDownload size={20} /> Download
+                </button>
+                {showMenu && (
+                  <div className="quality-menu">
+                    <div onClick={handleDownload}>360p (MP4)</div>
+                    <div onClick={handleDownload}>720p (HD)</div>
+                    <div onClick={handleDownload}>Audio (MP3)</div>
+                  </div>
+                )}
+              </div>
               <button><MdPlaylistAdd size={20} /> Save</button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* --- Login Modal --- */}
-      {showLoginModal && (
-        <div className="modal-overlay">
-          <div className="login-modal">
-            <button className="close-modal" onClick={() => setShowLoginModal(false)}>
-              <MdClose size={24} />
-            </button>
-            <h2>Want to subscribe to this channel?</h2>
-            <p>Sign in to subscribe to this channel and stay updated.</p>
-            <button className="modal-signin-btn" onClick={() => navigate("/login")}>
-              Sign In
-            </button>
-          </div>
-        </div>
-      )}
+      <div className="watch-recommendations">
+        {videos.map((v) => (
+          <Link to={`/watch/${v.id}?vid=${uuidv4()}`} key={v.id} className="recommendation-card">
+            <div className="rect-thumbnail"><img src={v.thumbnail} alt={v.title} /></div>
+            <div className="rect-info">
+              <p className="rect-title">{v.title}</p>
+              <p className="rect-meta">{v.channel}</p>
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 };

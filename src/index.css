@@ -14,42 +14,42 @@ body {
   gap: 16px;
   padding: 20px;
 }
-/* ૧. ડિફોલ્ટ વેલ્યુ સેટ કરો (જો કોઈ ક્લાસ ન હોય તો પણ ચાલે) */
-:root {
-  --bg-color: #ffffff;
-  --text-color: #0f0f0f;
-  --hover-bg: #f2f2f2;
-}
+  /* ૧. ડિફોલ્ટ વેલ્યુ સેટ કરો (જો કોઈ ક્લાસ ન હોય તો પણ ચાલે) */
+  :root {
+    --bg-color: #ffffff;
+    --text-color: #0f0f0f;
+    --hover-bg: #f2f2f2;
+  }
 
-/* ૨. લાઈટ થીમ */
-body.light {
-  --bg-color: #ffffff;
-  --text-color: #0f0f0f;
-  --card-bg: #f5f5f5;
-  --hover-bg: #e5e5e5; /* લાઈટમાં થોડું ડાર્ક ગ્રે હોવર */
-  --hover-text: #0f0f0f;
-}
+  /* ૨. લાઈટ થીમ */
+  body.light {
+    --bg-color: #ffffff;
+    --text-color: #0f0f0f;
+    --card-bg: #f5f5f5;
+    --hover-bg: #e5e5e5; /* લાઈટમાં થોડું ડાર્ક ગ્રે હોવર */
+    --hover-text: #0f0f0f;
+  }
 
-/* ૩. ડાર્ક થીમ */
-body.dark {
-  --bg-color: #0f0f0f;
-  --text-color: #ffffff;
-  --card-bg: #181818;
-  --hover-bg: #3f3f3f; /* ડાર્કમાં થોડું લાઈટ ગ્રે હોવર - YouTube જેવું */
-  --hover-text: #ffffff;
-}
+  /* ૩. ડાર્ક થીમ */
+  body.dark {
+    --bg-color: #0f0f0f;
+    --text-color: #ffffff;
+    --card-bg: #181818;
+    --hover-bg: #3f3f3f; /* ડાર્કમાં થોડું લાઈટ ગ્રે હોવર - YouTube જેવું */
+    --hover-text: #ffffff;
+  }
 
-/* ૪. ગ્લોબલ એપ્લાય */
-body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-}
+  /* ૪. ગ્લોબલ એપ્લાય */
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
 
-/* ૫. હોવર ઇફેક્ટ જે એલિમેન્ટમાં જોઈએ છે ત્યાં આ ક્લાસ લગાવો */
-.nav-link:hover, .sidebar-item:hover {
-  background-color: var(--hover-bg);
-}
-* {
-  color: var(--text-color);
-}
+  /* ૫. હોવર ઇફેક્ટ જે એલિમેન્ટમાં જોઈએ છે ત્યાં આ ક્લાસ લગાવો */
+  .nav-link:hover, .sidebar-item:hover {
+    background-color: var(--hover-bg);
+  }
+  * {
+    color: var(--text-color);
+  }
 

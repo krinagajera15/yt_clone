@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import Navbar from "../components/Navbar";
-import  Sidebar  from "../components/Sidebar";
+import Sidebar from "../components/Sidebar";
 import MiniSidebar from "../components/SubSidebar";
 import { Outlet } from "react-router-dom";
 import Modecontext from "../Context/ModeContext"; // Context ઈમ્પોર્ટ કરો

@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./VideoCard.css";
 
-const VideoCard = ({ video, isAdmin, onEdit, onDelete }) => {
+const VideoCard = ({ video }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -12,11 +12,34 @@ const VideoCard = ({ video, isAdmin, onEdit, onDelete }) => {
   const formatDuration = (duration) => {
     if (!duration) return "00:00";
     if (typeof duration === "string" && duration.includes(":")) return duration;
-    
+
     const mins = Math.floor(duration / 60);
     const secs = Math.floor(duration % 60);
     return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
   };
+
+  // 🔒 UNIQUE KEY per video
+  const viewsKey = `video_views_${video.id}`;
+  const daysKey = `video_days_${video.id}`;
+
+  // 🔹 Views (generate once, store forever)
+  let views = localStorage.getItem(viewsKey);
+  if (!views) {
+    const v = Math.floor(Math.random() * 900000) + 1000000;
+    views =
+      v >= 1000000
+        ? (v / 1000000).toFixed(1) + "M views"
+        : (v / 1000).toFixed(1) + "K views";
+    localStorage.setItem(viewsKey, views);
+  }
+
+  // 🔹 Days ago (generate once, store forever)
+  let daysAgo = localStorage.getItem(daysKey);
+  if (!daysAgo) {
+    const d = Math.floor(Math.random() * 30) + 1;
+    daysAgo = `${d} days ago`;
+    localStorage.setItem(daysKey, daysAgo);
+  }
 
   return (
     <div className="video-card" onClick={handleClick}>
@@ -25,14 +48,6 @@ const VideoCard = ({ video, isAdmin, onEdit, onDelete }) => {
         <span className="duration">
           {video.duration ? formatDuration(video.duration) : "00:00"}
         </span>
-
-        {/* Admin Buttons */}
-        {isAdmin && (
-          <div className="admin-overlay" onClick={(e) => e.stopPropagation()}>
-            <button className="edit-btn" onClick={() => onEdit(video.id)}>Edit</button>
-            <button className="delete-btn" onClick={() => onDelete(video.id)}>Delete</button>
-          </div>
-        )}
       </div>
 
       <div className="video-info">
@@ -44,9 +59,20 @@ const VideoCard = ({ video, isAdmin, onEdit, onDelete }) => {
               className="channel-avatar"
             />
           )}
-          <h3 className="video-title">{video.title}</h3>
+
+          <div className="text-info">
+            {/* 🔹 Title */}
+            <h2 className="video-title">{video.title}</h2>
+
+            {/* 🔹 Channel name */}
+            <p className="video-channel">{video.channel}</p>
+
+            {/* 🔹 Views & days */}
+            <p className="video-meta">
+              {views} • {daysAgo}
+            </p>
+          </div>
         </div>
-        <p className="video-channel">{video.channel}</p>
       </div>
     </div>
   );

@@ -9,7 +9,6 @@ import { SiYoutubeshorts } from "react-icons/si";
 import { MdOutlineSubscriptions } from "react-icons/md";
 import "./Sidebar.css";
 import { NavLink } from "react-router-dom";
-import { MdAccountCircle, MdChevronRight } from "react-icons/md";
 
 const Sidebar = () => {
   return (
@@ -22,15 +21,10 @@ const Sidebar = () => {
         {/* <NavLink to={"/shorts"} className={({ isActive }) =>isActive ? "sidebar-item active" : "sidebar-item"}><SiYoutubeshorts className="s-icon" /> <span>Shorts</span></NavLink> */}
       </div>
       <div className="sidebar-item">
-      {/* <MdOutlineSubscriptions className="s-icon" /> <span>Subscriptions</span> */}
         <NavLink to={"/subscribe"}><MdOutlineSubscriptions className="s-icon" /> <span>Subscriptions</span></NavLink>
       </div>
       <hr />
-      <div className="sidebar-item sidebar-profile">
-        <MdAccountCircle className="s-icon" /> 
-        <span style={{ fontWeight: "bold" }}>You</span>
-        <MdChevronRight style={{ marginLeft: "5px" }} />
-      </div>
+      <div className="sidebar-title">You &gt;</div>
       <div className="sidebar-item">
         <MdHistory className="s-icon" /> <span>History</span>
       </div>

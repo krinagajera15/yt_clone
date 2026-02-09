@@ -18,112 +18,6 @@ body.dark {
   --sub-bg: #ffffff;
   --sub-text: #0f0f0f;
 }
-.subscribe-btn {
-  /* સબસ્ક્રાઇબ ન કર્યું હોય ત્યારે બટન થીમથી ઉલટું હોવું જોઈએ (Highlight માટે) */
-  background-color: var(--text-color); /* Light માં બ્લેક, Dark માં વ્હાઇટ */
-  color: var(--bg-color);              /* Light માં વ્હાઇટ, Dark માં બ્લેક */
-  padding: 10px 18px;
-  border-radius: 25px;
-  border: none;
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.3s ease;
-}
-/* ૧. Modal Overlay - આખા સ્ક્રીન પર કાળું પડ (થોડું પારદર્શક) */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.7); /* ગમે તે થીમ હોય, ઓવરલે હંમેશા ડાર્ક રાખવો સારો લાગે */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-  backdrop-filter: blur(4px); /* બેકગ્રાઉન્ડ બ્લર કરવા માટે (ઓપ્શનલ) */
-}
-
-/* ૨. Modal Box - જે તમારી થીમ મુજબ કલર બદલશે */
-.login-modal {
-  background-color: var(--bg-color); /* થીમ મુજબ સફેદ કે કાળું */
-  color: var(--text-color);           /* થીમ મુજબ કાળું કે સફેદ */
-  padding: 40px 30px;
-  border-radius: 16px;
-  max-width: 420px;
-  width: 90%;
-  text-align: center;
-  position: relative;
-  box-shadow: 0px 15px 50px rgba(0, 0, 0, 0.5);
-  border: 1px solid var(--hover-bg); /* થીમ મુજબની બોર્ડર */
-}
-
-/* ૩. Close બટન */
-.close-modal {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: var(--text-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.2s;
-}
-
-.close-modal:hover {
-  opacity: 0.7;
-}
-
-/* ૪. ટેક્સ્ટ સ્ટાઇલ */
-.login-modal h2 {
-  margin-bottom: 12px;
-  font-size: 22px;
-  font-weight: 600;
-}
-
-.login-modal p {
-  margin-bottom: 30px;
-  font-size: 15px;
-  line-height: 1.5;
-  color: var(--text-color);
-  opacity: 0.8;
-}
-
-/* ૫. Sign In બટન (Highlight માટે આને બ્લુ જ રાખવું સારું લાગશે) */
-.modal-signin-btn {
-  background-color: #ff6565; /* YouTube Blue (જે ડાર્ક અને લાઇટ બંનેમાં દેખાશે) */
-  color: #0f0f0f;           /* બટનનો ટેક્સ્ટ કલર */
-  padding: 12px 25px;
-  border: none;
-  border-radius: 25px;
-  font-weight: bold;
-  font-size: 15px;
-  cursor: pointer;
-  width: 100%;
-  transition: background-color 0.2s;
-}
-
-.modal-signin-btn:hover {
-  background-color: #ff3e3e;
-}
-
-/* સબસ્ક્રાઇબ થયા પછીનું લુક (YouTube જેવું Greyish) */
-.subscribe-btn.subscribed {
-  background-color: var(--hover-bg); /* તમારી થીમ મુજબનું ગ્રે બેકગ્રાઉન્ડ */
-  color: var(--text-color);          /* થીમ મુજબનો ટેક્સ્ટ કલર */
-}
-
-/* સબસ્ક્રાઇબ બટન ના આઇકન માટે */
-.subscribe-btn svg {
-  color: inherit; /* બટનના ટેક્સ્ટ કલર મુજબ આઇકન કલર સેટ થશે */
-}
 
 .watch-container {
   display: flex;
@@ -166,11 +60,10 @@ body.dark {
 }
 
 .channel-avatar-img {
-  font-size: 40px;
-  color: var(--text-main);
   border-radius: 50%;
   height: 40px;
   width: 40px;
+  object-fit: cover;
 }
 
 .channel-name {
@@ -197,13 +90,13 @@ body.dark {
   margin-left: 10px;
 }
 
-/* Action Buttons Like/Share */
+/* Action Buttons */
 .action-buttons {
   display: flex;
   gap: 8px;
 }
 
-.action-buttons button, .like-dislike-group {
+.action-buttons button, .like-dislike-group, .download-btn {
   background-color: var(--btn-bg);
   color: var(--text-main);
   border: none;
@@ -215,7 +108,44 @@ body.dark {
   gap: 8px;
   font-size: 14px;
   font-weight: 500;
+  transition: 0.2s;
 }
+
+.action-buttons button:hover, .download-btn:hover {
+  background-color: var(--btn-hover);
+}
+
+/* --- DOWNLOAD DROPDOWN LOGIC (CSS) --- */
+.download-wrapper {
+  position: relative; /* Menu ne button ni niche set karva mate */
+}
+
+/* Menu styling - Have aa JS thi handle thase etle hover kadhi nakhyu che */
+.quality-menu {
+  position: absolute;
+  top: 45px;
+  left: 0;
+  background-color: var(--btn-bg);
+  border: 1px solid var(--btn-hover);
+  border-radius: 12px;
+  min-width: 140px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.15);
+  z-index: 100;
+  overflow: hidden;
+}
+
+.quality-menu div {
+  padding: 10px 15px;
+  color: var(--text-main);
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.quality-menu div:hover {
+  background-color: var(--btn-hover);
+}
+/* ------------------------------------- */
 
 .like-dislike-group {
   padding: 0;

@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import "./Login.css";
 import loginYt from "../assets/image/yt.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom"; // useLocation ઉમેર્યું
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation(); // લોકેશન સ્ટેટ મેળવવા માટે
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  // કયા પેજ પર પાછા જવું છે તે નક્કી કરો (Default હોમ પેજ "/")
+  const goBackTo = location.state?.from || "/";
 
   const handleLogin = async () => {
     setError("");
@@ -28,7 +32,7 @@ const Login = () => {
         "loginData",
         JSON.stringify({ role: "admin", email })
       );
-      navigate("/admin/dashboard"); // Redirect to admin dashboard
+      navigate("/dashbord"); // Admin ને તો ડેશબોર્ડ પર જ મોકલીશું
       return;
     }
 
@@ -46,7 +50,9 @@ const Login = () => {
       if (user) {
         // User login success
         localStorage.setItem("loginData", JSON.stringify({ role: "user", ...user }));
-        navigate("/"); // Redirect to home page
+        
+        // 🔥 અહીં જાદુ છે: જે પેજ પરથી આવ્યા હતા ત્યાં પાછા મોકલો
+        navigate(goBackTo, { replace: true }); 
       } else {
         setError("Invalid email or password");
       }
