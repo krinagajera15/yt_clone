@@ -91,7 +91,7 @@ const Shorts = () => {
       {shorts.map((short, index) => (
         <div className="short-card" key={short.id}>
           
-          <div className="video-container">
+          <div className="short-video-container">
             <iframe
               ref={el => (iframeRefs.current[index] = el)}
               src={`https://www.youtube.com/embed/${short.videoId}?enablejsapi=1&controls=1&rel=0`}
@@ -103,20 +103,20 @@ const Shorts = () => {
           </div>
 
           {/* Right Sidebar */}
-          <div className="right-sidebar">
-            <div className="action-item" onClick={() => handleLike(short.id)}>
-              <div className={`icon-circle ${short.isLiked ? "liked" : ""}`}>
+          <div className="short-right-sidebar">
+            <div className="short-action-item" onClick={() => handleLike(short.id)}>
+              <div className={`short-icon-circle ${short.isLiked ? "liked" : ""}`}>
                 <SlLike size={26} />
               </div>
               <span>{short.displayLikes}</span>
             </div>
 
             <div
-              className="action-item"
+              className="short-action-item"
               onClick={() => handleDislike(short.id)}
             >
               <div
-                className={`icon-circle ${
+                className={`short-icon-circle ${
                   short.isDisliked ? "disliked" : ""
                 }`}
               >
@@ -125,15 +125,15 @@ const Shorts = () => {
               <span>Dislike</span>
             </div>
 
-            <div className="action-item">
-              <div className="icon-circle">
+            <div className="short-action-item">
+              <div className="short-icon-circle">
                 <BiCommentDetail size={24} />
               </div>
               <span>{short.comments}</span>
             </div>
 
-            <div className="action-item">
-              <div className="icon-circle">
+            <div className="short-action-item">
+              <div className="short-icon-circle">
                 <RiShareForwardFill size={24} />
               </div>
               <span>Share</span>
@@ -141,13 +141,13 @@ const Shorts = () => {
           </div>
 
           {/* Bottom Info */}
-          <div className="info-overlay">
-            <div className="profile-row">
-              <div className="avatar-placeholder"></div>
-              <span className="username">@adityagoswami</span>
-              <button className="subscribe-button">Subscribe</button>
+          <div className="short-info-overlay">
+            <div className="short-profile-row">
+              <div className="short-avatar-placeholder"></div>
+              <span className="short-username">@adityagoswami</span>
+              <button className="short-subscribe-button">Subscribe</button>
             </div>
-            <p className="short-title">{short.title}</p>
+            <p className="short-short-title">{short.title}</p>
           </div>
 
         </div>

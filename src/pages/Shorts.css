@@ -1,4 +1,4 @@
-/* ===== GLOBAL ===== */
+/* ===== GLOBAL =====*/
 body {
   margin: 0;
   padding: 0;
@@ -7,7 +7,7 @@ body {
   font-family: Arial, sans-serif;
 }
 
-/* ===== SHORTS WRAPPER ===== */
+/* ===== SHORTS WRAPPER =====*/ 
 .shorts-wrapper {
   height: 100vh;
   width: 100%;
@@ -35,7 +35,7 @@ body {
 }
 
 /* ===== VIDEO CONTAINER ===== */
-.video-container {
+.short-video-container {
   height: 90%;   /* પહેલા 100vh હતું → હવે ઓછી height */
   width: auto;
   aspect-ratio: 9/16;
@@ -45,16 +45,15 @@ body {
   background: black;
 }
 
-
 /* ===== VIDEO ===== */
-.video-container iframe {
+.short-video-container iframe {
   width: 100%;
   height: 100%;
   border: none;
 }
 
 /* ===== RIGHT SIDE ICONS ===== */
-.right-sidebar {
+.short-right-sidebar {
   position: absolute;
   /* right: 20px; */
   /* bottom: 140px; */
@@ -67,14 +66,14 @@ body {
   z-index: 10;
 }
 
-.action-item {
+.short-action-item {
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
 }
 
-.icon-circle {
+.short-icon-circle {
   width: 52px;
   height: 52px;
   background: rgba(255,255,255,0.15);
@@ -84,16 +83,16 @@ body {
   align-items: center;
 }
 
-.liked {
+.short-liked {
   background: red;
 }
 
-.disliked {
+.short-disliked {
   background: #69bcd1;
 }
 
 /* ===== BOTTOM INFO ===== */
-.info-overlay {
+.short-info-overlay {
   position: absolute;
   bottom: 40px;
   left: 20px;
@@ -101,20 +100,20 @@ body {
   z-index: 10;
 }
 
-.profile-row {
+.short-profile-row {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.avatar-placeholder {
+.short-avatar-placeholder {
   width: 42px;
   height: 42px;
   background: gray;
   border-radius: 50%;
 }
 
-.subscribe-button {
+.short-subscribe-button {
   background: red;
   border: none;
   padding: 6px 15px;
@@ -130,14 +129,14 @@ body {
 
 /* ===== MOBILE ===== */
 @media (max-width: 768px) {
-  .video-container {
+  .short-video-container {
     width: 100%;
     height: 100vh;
     aspect-ratio: auto;
   }
 
-  .right-sidebar {
+  .short-right-sidebar {
     right: 10px;
     bottom: 120px;
   }
-}
+} 
