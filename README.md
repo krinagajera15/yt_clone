@@ -6,7 +6,7 @@
 
 🚀 Live Demo
 
-    🔗 Live Project:@yt-clone-gz6t.vercel.app
+    🔗 yt-clone-gz6t-git-main-krina-gajeras-projects.vercel.app
 
 👨‍💻 Project Partners
 
