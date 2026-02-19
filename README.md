@@ -1,16 +1,84 @@
-# React + Vite
+📺 YouTube Clone – React JS Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+            A full-featured YouTube Clone web application built using React JS, implementing real-world
+      functionalities similarto YouTube.This project focuses on authentication, role-based access, 
+      content management, and modern UI/UX features.
 
-Currently, two official plugins are available:
+🚀 Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+    🔗 Live Project: https://your-project-name.vercel.app
 
-## React Compiler
+👨‍💻 Project Partners
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+    Krina Gajera
+    Hetvi Vadaiya
+    Prinjal Rupareliya
 
-## Expanding the ESLint configuration
+✨ Features
+  🔐 Authentication & Authorization
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+        • User Registration & Login
+        • Role-based Login (User / Admin)
+        • Only logged-in users can:
+        • Subscribe to channels
+        • Like videos
+        • Comment on videos
+        • Create channels
+
+  📹 Video & Shorts Management
+
+        • Upload Videos and Shorts
+        • Channel owner can:
+        • Edit own videos & shorts
+        • Delete own videos & shorts
+        • Separate sections for Videos and Shorts
+
+  📺 Channel System
+
+       • Users can create their own channel
+       • Each channel displays:
+       • Uploaded videos
+       • Uploaded shorts
+       • Subscribe / Unsubscribe functionality
+
+  👍 Interaction Features
+
+        • Like / Unlike videos
+        • Comment on videos
+        • Subscribe to channels (Login required)
+
+  🎙 Voice Search
+
+        • Search videos using Voice (Mic) Search
+        • Real-time speech-to-text functionality
+
+  🌗 Theme Support
+
+        • Light Mode
+        • Dark Mode
+        • Theme preference stored for better user experience
+
+  🛠 Admin Panel
+
+    👉Admin can manage:
+
+          • Users
+          • Channels
+          • Videos
+          • Shorts
+          • Comments
+          • Full control over platform data
+
+  🧑‍💻 Tech Stack
+
+        • Frontend: React JS, React Router
+        • State Management: Context API
+        • Styling: CSS / Tailwind CSS
+        • Authentication: JWT / Role-based Auth
+        • Deployment: Vercel
+        
+  📌 Future Enhancements
+
+        • Video watch history
+        • Shorts watch history
+        • Create channel feature
