@@ -6,7 +6,7 @@
 
 🚀 Live Demo
 
-    🔗 Live Project:yt-clone-gz6t.vercel.app
+    🔗 Live Project:@yt-clone-gz6t.vercel.app
 
 👨‍💻 Project Partners
 
