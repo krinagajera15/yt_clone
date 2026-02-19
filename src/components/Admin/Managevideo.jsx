@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FiMoreVertical, FiEdit2, FiTrash2 } from "react-icons/fi";
-import "./ManageVideo.css";
+import "./Managevideo.css";
 import Sidebaradmin from "../../components/Admin/SidebarAdmin";
 import Navbaradmin from "../../components/Admin/NavbarAdmin";
 
