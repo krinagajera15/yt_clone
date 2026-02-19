@@ -1,0 +1,218 @@
+/* થીમ વેરીએબલ્સ */
+:root {
+  --text-main: #0f0f0f;
+  --text-sub: #606060;
+  --bg-watch: #ffffff;
+  --btn-bg: #f2f2f2;
+  --btn-hover: #e5e5e5;
+  --sub-bg: #0f0f0f;
+  --sub-text: #ffffff;
+}
+
+body.dark {
+  --text-main: #ffffff;
+  --text-sub: #aaaaaa;
+  --bg-watch: #0f0f0f;
+  --btn-bg: #272727;
+  --btn-hover: #3f3f3f;
+  --sub-bg: #ffffff;
+  --sub-text: #0f0f0f;
+}
+
+.watch-container {
+  display: flex;
+  padding: 20px 40px;
+  gap: 24px;
+  background-color: var(--bg-watch);
+  min-height: 100vh;
+}
+
+/* LEFT SECTION */
+.watch-main {
+  flex: 3;
+}
+
+.video-container iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+}
+
+.watch-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--text-main);
+  margin: 12px 0;
+}
+
+.video-actions-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.channel-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.channel-avatar-img {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+}
+
+.channel-name {
+  color: var(--text-main);
+  font-weight: bold;
+  font-size: 16px;
+  margin: 0;
+}
+
+.sub-count {
+  color: var(--text-sub);
+  font-size: 12px;
+  margin: 0;
+}
+
+.subscribe-btn {
+  background-color: var(--sub-bg);
+  color: var(--sub-text);
+  border: none;
+  padding: 8px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-left: 10px;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.action-buttons button, .like-dislike-group, .download-btn {
+  background-color: var(--btn-bg);
+  color: var(--text-main);
+  border: none;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.action-buttons button:hover, .download-btn:hover {
+  background-color: var(--btn-hover);
+}
+
+/* --- DOWNLOAD DROPDOWN LOGIC (CSS) --- */
+.download-wrapper {
+  position: relative; /* Menu ne button ni niche set karva mate */
+}
+
+/* Menu styling - Have aa JS thi handle thase etle hover kadhi nakhyu che */
+.quality-menu {
+  position: absolute;
+  top: 45px;
+  left: 0;
+  background-color: var(--btn-bg);
+  border: 1px solid var(--btn-hover);
+  border-radius: 12px;
+  min-width: 140px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.15);
+  z-index: 100;
+  overflow: hidden;
+}
+
+.quality-menu div {
+  padding: 10px 15px;
+  color: var(--text-main);
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.quality-menu div:hover {
+  background-color: var(--btn-hover);
+}
+/* ------------------------------------- */
+
+.like-dislike-group {
+  padding: 0;
+  overflow: hidden;
+}
+
+.like-dislike-group button {
+  border-radius: 0;
+  padding: 8px 14px;
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  background-color: var(--text-sub);
+  opacity: 0.3;
+}
+
+/* RIGHT SECTION: Recommendations */
+.watch-recommendations {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.recommendation-card {
+  display: flex;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.rect-thumbnail {
+  flex: 1;
+}
+
+.rect-thumbnail img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.rect-info {
+  flex: 1.2;
+}
+
+.rect-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-main);
+  margin: 0 0 4px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.rect-meta {
+  font-size: 12px;
+  color: var(--text-sub);
+  margin: 0;
+}
+
+/* Loading & Error */
+.loading-text, .error-text {
+  text-align: center;
+  padding: 50px;
+  color: var(--text-main);
+}

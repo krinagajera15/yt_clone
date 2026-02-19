@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./Shorts.css";
-import { SlLike } from "react-icons/sl";
-import { SlDislike } from "react-icons/sl";
+import { SlLike, SlDislike } from "react-icons/sl";
 import { BiCommentDetail } from "react-icons/bi";
 import { RiShareForwardFill } from "react-icons/ri";
 
@@ -9,38 +8,64 @@ const Shorts = () => {
   const [shorts, setShorts] = useState([]);
   const iframeRefs = useRef([]);
 
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("shorts")) || [];
-    const formattedData = data.map(item => ({
-      ...item,
-      isLiked: false,
-      isDisliked: false,
-      displayLikes: item.likes || 0
-    }));
-    setShorts(formattedData);
-  }, []);
+  const loggedInUser = JSON.parse(localStorage.getItem("loginData"));
+  const currentUserId = loggedInUser?.id || "guest";
 
-  // ✅ Auto Play + Restart Video Logic
+  const CHANNELS_API = "https://69809eaa6570ee87d50fd891.mockapi.io/channelsdata";
+
+  const loadData = async () => {
+    try {
+      const globalShorts = JSON.parse(localStorage.getItem("shorts")) || [];
+      const userInteractions = JSON.parse(localStorage.getItem(`interactions_${currentUserId}`)) || {};
+
+      const channelRes = await fetch(CHANNELS_API);
+      const channelsData = await channelRes.json();
+
+      const formattedData = globalShorts.map(short => {
+        const channelFromAPI = channelsData.find(c => c.userEmail === short.userEmail);
+        return {
+          ...short,
+          isLiked: userInteractions[short.id]?.liked || false,
+          isDisliked: userInteractions[short.id]?.disliked || false,
+          likes: Number(short.likes) || 0,
+          comments: short.comments || 0,
+          displayChannelName: channelFromAPI
+            ? `@${channelFromAPI.c_name}`
+            : (short.channel ? `@${short.channel}` : "@User"),
+          displayChannelImage: channelFromAPI
+            ? channelFromAPI.c_image
+            : (short.c_image ? short.c_image : null)
+        };
+      });
+
+      setShorts(formattedData);
+    } catch (error) {
+      console.error("Error loading data:", error);
+      const localOnly = (JSON.parse(localStorage.getItem("shorts")) || []).map(s => ({
+        ...s,
+        displayChannelName: s.channel ? `@${s.channel}` : "@User",
+        displayChannelImage: s.c_image || null
+      }));
+      setShorts(localOnly);
+    }
+  };
+
+  useEffect(() => {
+    loadData();
+    window.addEventListener('storage', loadData);
+    return () => window.removeEventListener('storage', loadData);
+  }, [currentUserId]);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
           const iframe = entry.target;
-
           if (entry.isIntersecting) {
-            iframe.contentWindow.postMessage(
-              '{"event":"command","func":"seekTo","args":[0,true]}',
-              "*"
-            );
-            iframe.contentWindow.postMessage(
-              '{"event":"command","func":"playVideo","args":""}',
-              "*"
-            );
+            iframe.contentWindow.postMessage('{"event":"command","func":"seekTo","args":[0,true]}', "*");
+            iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', "*");
           } else {
-            iframe.contentWindow.postMessage(
-              '{"event":"command","func":"stopVideo","args":""}',
-              "*"
-            );
+            iframe.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', "*");
           }
         });
       },
@@ -48,108 +73,129 @@ const Shorts = () => {
     );
 
     iframeRefs.current.forEach(el => el && observer.observe(el));
-
     return () => observer.disconnect();
   }, [shorts]);
 
-  const handleLike = id => {
-    setShorts(prev =>
-      prev.map(short => {
-        if (short.id === id) {
-          const liked = !short.isLiked;
-          return {
-            ...short,
-            isLiked: liked,
-            isDisliked: false,
-            displayLikes: liked
-              ? (short.likes || 0) + 1
-              : short.likes || 0
-          };
+  // ========== LIKE / DISLIKE ==========
+
+  const handleLike = (id) => {
+    if (!loggedInUser) {
+      alert("Please login to like shorts!");
+      return;
+    }
+
+    const userInteractions = JSON.parse(localStorage.getItem(`interactions_${currentUserId}`)) || {};
+    const globalData = JSON.parse(localStorage.getItem("shorts")) || [];
+
+    const updatedData = globalData.map(short => {
+      if (short.id === id) {
+        let likes = Number(short.likes) || 0;
+        if (userInteractions[id]?.liked) {
+          likes = Math.max(0, likes - 1);
+          userInteractions[id] = { liked: false, disliked: false };
+        } else {
+          likes += 1;
+          userInteractions[id] = { liked: true, disliked: false };
         }
-        return short;
-      })
-    );
+        return { ...short, likes };
+      }
+      return short;
+    });
+
+    localStorage.setItem("shorts", JSON.stringify(updatedData));
+    localStorage.setItem(`interactions_${currentUserId}`, JSON.stringify(userInteractions));
+    loadData();
   };
 
-  const handleDislike = id => {
-    setShorts(prev =>
-      prev.map(short => {
-        if (short.id === id) {
-          return {
-            ...short,
-            isDisliked: !short.isDisliked,
-            isLiked: false
-          };
+  const handleDislike = (id) => {
+    if (!loggedInUser) {
+      alert("Please login to dislike shorts!");
+      return;
+    }
+
+    const userInteractions = JSON.parse(localStorage.getItem(`interactions_${currentUserId}`)) || {};
+    const globalData = JSON.parse(localStorage.getItem("shorts")) || [];
+
+    const updatedData = globalData.map(short => {
+      if (short.id === id) {
+        let likes = Number(short.likes) || 0;
+        if (userInteractions[id]?.disliked) {
+          userInteractions[id] = { liked: false, disliked: false };
+        } else {
+          if (userInteractions[id]?.liked) likes = Math.max(0, likes - 1);
+          userInteractions[id] = { liked: false, disliked: true };
         }
-        return short;
-      })
-    );
+        return { ...short, likes };
+      }
+      return short;
+    });
+
+    localStorage.setItem("shorts", JSON.stringify(updatedData));
+    localStorage.setItem(`interactions_${currentUserId}`, JSON.stringify(userInteractions));
+    loadData();
   };
+
+  const formatLikes = (num) => {
+    if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+    return num;
+  };
+
+  // ========== JSX ==========
 
   return (
     <div className="shorts-wrapper">
       {shorts.map((short, index) => (
         <div className="short-card" key={short.id}>
-          
           <div className="short-video-container">
             <iframe
               ref={el => (iframeRefs.current[index] = el)}
-              src={`https://www.youtube.com/embed/${short.videoId}?enablejsapi=1&controls=1&rel=0`}
+              src={`https://www.youtube.com/embed/${short.videoId}?enablejsapi=1&rel=0&controls=0&modestbranding=1`}
               title={short.title}
               frameBorder="0"
-              allow="autoplay"
               allowFullScreen
             ></iframe>
           </div>
 
-          {/* Right Sidebar */}
           <div className="short-right-sidebar">
             <div className="short-action-item" onClick={() => handleLike(short.id)}>
-              <div className={`short-icon-circle ${short.isLiked ? "liked" : ""}`}>
-                <SlLike size={26} />
+              <div className={`short-icon-circle ${short.isLiked ? "active-like" : ""}`}>
+                <SlLike size={24} />
               </div>
-              <span>{short.displayLikes}</span>
+              <span>{formatLikes(short.likes)}</span>
             </div>
 
-            <div
-              className="short-action-item"
-              onClick={() => handleDislike(short.id)}
-            >
-              <div
-                className={`short-icon-circle ${
-                  short.isDisliked ? "disliked" : ""
-                }`}
-              >
-                <SlDislike size={26} />
+            <div className="short-action-item" onClick={() => handleDislike(short.id)}>
+              <div className={`short-icon-circle ${short.isDisliked ? "active-dislike" : ""}`}>
+                <SlDislike size={24} />
               </div>
               <span>Dislike</span>
             </div>
 
             <div className="short-action-item">
-              <div className="short-icon-circle">
-                <BiCommentDetail size={24} />
-              </div>
-              <span>{short.comments}</span>
+              <div className="short-icon-circle"><BiCommentDetail size={24} /></div>
+              <span>{short.comments || 0}</span>
             </div>
 
             <div className="short-action-item">
-              <div className="short-icon-circle">
-                <RiShareForwardFill size={24} />
-              </div>
+              <div className="short-icon-circle"><RiShareForwardFill size={24} /></div>
               <span>Share</span>
             </div>
           </div>
 
-          {/* Bottom Info */}
           <div className="short-info-overlay">
             <div className="short-profile-row">
-              <div className="short-avatar-placeholder"></div>
-              <span className="short-username">@adityagoswami</span>
-              <button className="short-subscribe-button">Subscribe</button>
+              <div className="short-avatar">
+                {short.displayChannelImage ? (
+                  <img src={short.displayChannelImage} alt="logo" style={{width:'100%', height:'100%', borderRadius:'50%'}} />
+                ) : (
+                  short.displayChannelName.charAt(1).toUpperCase()
+                )}
+              </div>
+              <span className="short-username">{short.displayChannelName}</span>
+              <button className="short-subscribe-btn">Subscribe</button>
             </div>
-            <p className="short-short-title">{short.title}</p>
+            <p className="short-title-text">{short.title}</p>
           </div>
-
         </div>
       ))}
     </div>

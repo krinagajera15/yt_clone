@@ -1,34 +1,55 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; 
 import "./AddVideo.css";
-import Modecontext from "../Context/ModeContext"; // Context ઈમ્પોર્ટ કરો
+import Modecontext from "../Context/ModeContext";
 
 const AddVideo = () => {
   const [formData, setFormData] = useState({
     title: "",
     channel: "",
+    channelImage: "",
     thumbnail: "",
     url: "",
     duration: ""
   });
 
   const navigate = useNavigate();
-  
-  // થીમ મેળવો
   const ctx = useContext(Modecontext);
   const theme = ctx?.mode || 'light';
 
-  const getYouTubeID = (url) => {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[2].length === 11) ? match[2] : null;
-  };
+  useEffect(() => {
+    const loginData = JSON.parse(localStorage.getItem("loginData"));
+    const userEmail = loginData?.email;
+
+    if (userEmail) {
+      const allChannels = JSON.parse(localStorage.getItem("userChannels")) || {};
+      const myChannel = allChannels[userEmail];
+
+      if (myChannel) {
+        // જો ચેનલ મળે તો ડેટા સેટ કરો
+        setFormData((prev) => ({
+          ...prev,
+          channel: myChannel.c_name,
+          channelImage: myChannel.c_image
+        }));
+      } else {
+        // જો ચેનલ નથી બનાવી તો પાછા મોકલો
+        alert("You need to create a channel first!");
+        navigate("/"); 
+      }
+    } else {
+      alert("Please login to access this page");
+      navigate("/login");
+    }
+  }, [navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
     if (name === "url") {
-      const videoId = getYouTubeID(value);
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+      const match = value.match(regExp);
+      const videoId = (match && match[2].length === 11) ? match[2] : null;
+
       if (videoId) {
         setFormData({
           ...formData,
@@ -36,7 +57,7 @@ const AddVideo = () => {
           thumbnail: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
         });
       } else {
-        setFormData({ ...formData, [name]: value });
+        setFormData({ ...formData, url: value });
       }
     } else {
       setFormData({ ...formData, [name]: value });
@@ -45,82 +66,51 @@ const AddVideo = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
     fetch("https://697343e3b5f46f8b5826ae3f.mockapi.io/videos", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     })
-    .then((res) => res.json())
     .then(() => {
       alert("Video Added Successfully! 🎉");
-      setFormData({ title: "", channel: "", thumbnail: "", url: "", duration: "" }); 
       navigate("/"); 
     })
-    .catch((err) => console.error("Error adding video:", err));
+    .catch((err) => console.error("Error:", err));
   };
 
   return (
-    // ક્લાસમાં થીમ ઉમેરવી જરૂરી છે
     <div className={`add-video-container ${theme}`}>
       <div className="add-video-card">
-        <h2>Add New YouTube Video</h2>
-        <form onSubmit={handleSubmit} className="add-video-form">
-          
-          <div className="input-group">
-            <label>Video Title</label>
-            <input 
-              name="title" 
-              placeholder="Enter video title" 
-              value={formData.title} 
-              onChange={handleChange} 
-              required 
+        <h2>Add Video</h2>
+        
+        {/* ચેનલ પ્રિવ્યૂ */}
+        <div className="channel-badge" style={{display: 'flex', alignItems: 'center', gap: '10px', background: '#eee', padding: '10px', borderRadius: '8px', marginBottom: '15px'}}>
+          {formData.channelImage && (
+            <img 
+              src={formData.channelImage} 
+              alt="logo" 
+              style={{width: '35px', height: '35px', borderRadius: '50%'}} 
             />
-          </div>
-          
-          <div className="input-group">
-            <label>Channel Name</label>
-            <input 
-              name="channel" 
-              placeholder="Enter channel name" 
-              value={formData.channel} 
-              onChange={handleChange} 
-              required 
-            />
-          </div>
-
-          <div className="input-group">
-            <label>YouTube URL</label>
-            <input 
-              name="url" 
-              placeholder="Paste YouTube link here" 
-              value={formData.url} 
-              onChange={handleChange} 
-              required 
-            />
-          </div>
-
-          <div className="input-group">
-            <label>Video Duration (e.g. 10:05)</label>
-            <input 
-              name="duration" 
-              placeholder="Enter duration" 
-              value={formData.duration} 
-              onChange={handleChange} 
-              required 
-            />
-          </div>
-
-          {formData.thumbnail && (
-            <div className="thumbnail-preview">
-               <p>Thumbnail Preview:</p>
-               <img src={formData.thumbnail} alt="Preview" />
-            </div>
           )}
+            <span style={{color: '#333', fontWeight: 'bold'}}>
+              {formData.channel}
+            </span>
+        </div>
 
-          <button type="submit" className="upload-btn">
-            UPLOAD VIDEO
-          </button>
+        <form onSubmit={handleSubmit} className="add-video-form">
+          <input name="title" placeholder="Video Title" value={formData.title} onChange={handleChange} required />
+          <input name="url" placeholder="YouTube URL" value={formData.url} onChange={handleChange} required />
+          <input name="duration" placeholder="Duration (e.g. 5:20)" value={formData.duration} onChange={handleChange} required />
+          <div style={{ display: 'flex', gap: '20px' }}>
+             {formData.thumbnail && (
+                <div className="thumbnail-preview">
+                  <p>Video Thumbnail:</p>
+                  <img src={formData.thumbnail} alt="Preview" style={{ width: '150px' }} />
+                </div>
+              )}
+          </div>
+
+          <button type="submit" className="upload-btn">UPLOAD</button>
         </form>
       </div>
     </div>

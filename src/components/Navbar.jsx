@@ -18,6 +18,9 @@ const Navbar = ({ toggleSidebar }) => {
   const [createChannelOpen, setCreateChannelOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
+  // સર્ચ માટેનું સ્ટેટ
+  const [searchQuery, setSearchQuery] = useState("");
 
   const navigate = useNavigate();
   const videoRef = useRef(null);
@@ -35,13 +38,12 @@ const Navbar = ({ toggleSidebar }) => {
         : "U";
         setUserInitial(firstLetter);
         setIsLoggedIn(true);
-    }else {
+    } else {
       setUserInitial("U");
       setIsLoggedIn(false);
     }
   }, []);
 
-  // Close dropdown if click outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -54,6 +56,15 @@ const Navbar = ({ toggleSidebar }) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // --- સર્ચ હેન્ડલર ફંક્શન ---
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      // સર્ચ ક્વેરી સાથે સર્ચ પેજ પર લઈ જશે
+      navigate(`/search?q=${searchQuery}`);
+    }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("loginData");
@@ -69,23 +80,30 @@ const Navbar = ({ toggleSidebar }) => {
       <nav className="navbar">
         <div className="nav-left">
           <HiMenu className="nav-icon" onClick={toggleSidebar} />
-          <img src={imgs} alt="YouTube Logo" className="yt-logo" />
-          <h1 className="yt-logo-title">YouTube</h1>
+          <img src={imgs} alt="YouTube Logo" className="yt-logo" style={{cursor:'pointer'}} onClick={() => navigate('/')} />
+          <h1 className="yt-logo-title" style={{cursor:'pointer'}} onClick={() => navigate('/')}>YouTube</h1>
           <span className="country-code">IN</span>
         </div>
 
         <div className="nav-center">
-          <div className="search-box">
-            <input type="text" placeholder="Search" />
-            <button className="search-btn"><AiOutlineSearch /></button>
-          </div>
+          {/* સર્ચ ફોર્મ */}
+          <form className="search-box" onSubmit={handleSearch}>
+            <input 
+              type="text" 
+              placeholder="Search" 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <button type="submit" className="search-btn">
+              <AiOutlineSearch />
+            </button>
+          </form>
           <div className="mic-icon" onClick={() => setVoiceOpen(true)}>
             <MdMic />
           </div>
         </div>
 
         <div className="nav-right">
-          {/* Create Video dropdown */}
           <div className="create-video" ref={videoRef}>
             <MdVideoCall
               className="nav-icon"
@@ -93,7 +111,7 @@ const Navbar = ({ toggleSidebar }) => {
             />
             {videoDropdownOpen && (
               <div className="video-dropdown">
-                <button onClick={() => setCreateChannelOpen(true)}>Upload video</button>
+                <button onClick={() => setCreateChannelOpen(true)}>Create Channel</button>
                 <button onClick={() => alert("Go live clicked")}>Go live</button>
               </div>
             )}
@@ -104,7 +122,6 @@ const Navbar = ({ toggleSidebar }) => {
             onClick={() => setNotificationsOpen(!notificationsOpen)}
           />
 
-          {/* User Profile */}
           <div className="user-profile-container" ref={dropdownRef} style={{position: 'relative'}}>
             <div className="user-profile" onClick={() => setDropdownOpen(!dropdownOpen)}>
               {userInitial || "U"}
@@ -112,11 +129,12 @@ const Navbar = ({ toggleSidebar }) => {
 
             {dropdownOpen && (
               <div className="profile-dropdown">
-              {isLoggedIn ? (
-                <button onClick={handleLogout}>Logout</button>
-              ) : (
-                <button onClick={() => navigate("/login")}>Login</button>
-              )}
+                <button onClick={() => navigate('/userdetails')}>My Studio</button>
+                {isLoggedIn ? (
+                  <button onClick={handleLogout}>Logout</button>
+                ) : (
+                  <button onClick={() => navigate("/login")}>Login</button>
+                )}
                 <button onClick={toggleMode}>
                   {mode === "light" ? "🌙 Dark Mode" : "☀️ Light Mode"}
                 </button>

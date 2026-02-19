@@ -1,137 +1,106 @@
-/* આખા કન્ટેનરને સેન્ટરમાં લાવવા માટે */
+/* Container styling */
 .add-video-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 80px); /* ફુલ સ્ક્રીન સેટિંગ */
+    min-height: 80vh;
     padding: 20px;
+    background-color: var(--bg-color); /* index.css માંથી */
+    transition: background 0.3s ease;
 }
 
-/* લાઈટ થીમ કલર્સ */
-body.light .add-video-container {
-    background-color: #f1f1f1;
-}
-
-body.light .add-video-card {
-    background: white;
-    color: #333;
-}
-
-body.light .input-group label {
-    color: #555;
-}
-
-body.light .input-group input {
-    background-color: #fff;
-    color: #000;
-    border: 1px solid #ddd;
-}
-
-/* ડાર્ક થીમ કલર્સ */
-body.dark .add-video-container {
-    background-color: #0f0f0f;
-}
-
-body.dark .add-video-card {
-    background: #1f1f1f;
-    color: white;
-}
-
-body.dark .add-video-card h2 {
-    color: white;
-}
-
-body.dark .input-group label {
-    color: #aaa;
-}
-
-body.dark .input-group input {
-    background-color: #2a2a2a;
-    color: white;
-    border: 1px solid #3f3f3f;
-}
-
-/* ફોર્મનું કાર્ડ */
+/* Card styling */
 .add-video-card {
+    background-color: var(--card-bg, #f9f9f9);
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     width: 100%;
     max-width: 450px;
-   
+    text-align: center;
 }
 
 .add-video-card h2 {
-    text-align: center;
-    margin-bottom: 25px;
-    font-family: Arial, sans-serif;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: var(--text-color);
 }
 
-/* ફોર્મનું લેઆઉટ */
+/* Channel Badge (Logo and Name) */
+.channel-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: var(--hover-bg);
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(128, 128, 128, 0.2);
+}
+
+.channel-badge img {
+    border: 2px solid #ff0000; /* YouTube Red Border */
+}
+
+.channel-badge span {
+    font-size: 16px;
+    color: var(--text-color);
+}
+
+/* Form inputs styling */
 .add-video-form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
 }
 
-.input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.input-group label {
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.input-group input {
-    padding: 12px;
+.add-video-form input {
+    padding: 12px 15px;
     border-radius: 6px;
-    font-size: 15px;
+    border: 1px solid #ccc;
     outline: none;
+    font-size: 14px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: border 0.3s ease;
 }
 
-.input-group input:focus {
-    border-color: #ff0000; /* YouTube Red focus */
+/* Dark mode input adjustment */
+body.dark .add-video-form input {
+    border: 1px solid #3f3f3f;
 }
 
-/* થંબનેલ પ્રિવ્યૂ */
-.thumbnail-preview {
-    text-align: center;
-    border: 1px dashed #555;
-    padding: 10px;
-    border-radius: 8px;
-    background: rgba(128, 128, 128, 0.1);
+.add-video-form input:focus {
+    border-color: #065fd4; /* YouTube Blue */
+    box-shadow: 0 0 5px rgba(6, 95, 212, 0.3);
 }
 
-.thumbnail-preview p {
-    font-size: 12px;
-    color: #888;
-    margin-bottom: 8px;
-}
-
-.thumbnail-preview img {
-    width: 100%;
-    height: auto;
-    border-radius: 6px;
-    display: block;
-}
-
-/* અપલોડ બટન */
+/* Upload Button */
 .upload-btn {
-    background-color: #ff0000;
+    background-color: #cc0000;
     color: white;
     padding: 12px;
     border: none;
     border-radius: 6px;
-    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease;
     margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .upload-btn:hover {
-    background-color: #cc0000;
+    background-color: #ff0000;
 }
 
+.upload-btn:active {
+    transform: scale(0.98);
+}
+
+/* Placeholder Styling */
+::placeholder {
+    color: #888;
+    opacity: 0.8;
+}

@@ -1,0 +1,168 @@
+/* =========================
+   CHANNEL ADMIN PAGE CSS
+   ========================= */
+
+/* Section Wrapper */
+.channel-section {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-top: 20px;
+}
+
+/* =========================
+   TABLE STYLES
+   ========================= */
+
+.channel-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.channel-table thead {
+  background: #f4f6f8;
+}
+
+.channel-table th,
+.channel-table td {
+  padding: 12px 14px;
+  text-align: left;
+  font-size: 14px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.channel-table th {
+  font-weight: 600;
+  color: #333;
+}
+
+.channel-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+/* =========================
+   IMAGE
+   ========================= */
+
+.table-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+/* =========================
+   INPUT (EDIT MODE)
+   ========================= */
+
+.channel-table input {
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.channel-table input:focus {
+  border-color: #6366f1;
+}
+
+/* =========================
+   BUTTONS
+   ========================= */
+
+.channel-table button {
+  padding: 6px 12px;
+  margin-right: 6px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Edit Button */
+.channel-table button:nth-child(1) {
+  background: #3b82f6;
+  color: #fff;
+}
+
+.channel-table button:nth-child(1):hover {
+  background: #2563eb;
+}
+
+/* Delete Button */
+.channel-table button:nth-child(2) {
+  background: #ef4444;
+  color: #fff;
+}
+
+.channel-table button:nth-child(2):hover {
+  background: #dc2626;
+}
+
+/* Save Button (when editing) */
+.channel-table button:only-child {
+  background: #10b981;
+  color: #fff;
+}
+
+.channel-table button:only-child:hover {
+  background: #059669;
+}
+
+/* =========================
+   PAGINATION
+   ========================= */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.pagination button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.pagination button:hover {
+  background: #f3f4f6;
+}
+
+.pagination button.active {
+  background: #6366f1;
+  color: #fff;
+  border-color: #6366f1;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 768px) {
+  .channel-table th,
+  .channel-table td {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .table-img {
+    width: 45px;
+    height: 45px;
+  }
+
+  .channel-table button {
+    margin-bottom: 5px;
+  }
+}

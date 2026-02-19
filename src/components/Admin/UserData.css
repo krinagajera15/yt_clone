@@ -1,0 +1,72 @@
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.user-table th {
+  background-color: #ec2b2b;
+  color: white;
+  font-weight: 600;
+  text-align: left;
+  padding: 15px;
+  border-bottom: 2px solid #eee;
+}
+
+.user-table td {
+  padding: 15px;
+  border-bottom: 1px solid #f1f1f1;
+  color: #444;
+  font-size: 0.95rem;
+}
+
+.user-name-cell {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.pass-code {
+  background: #f4f4f4;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: monospace;
+  color: #e91e63;
+}
+
+.table-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.total-count-badge {
+  background: #ec2b2b;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.user-delete-btn {
+  background: none;
+  border: none;
+  color: #ff4d4d;
+  cursor: pointer;
+  transition: 0.2s;
+  padding: 5px;
+}
+
+.user-delete-btn:hover {
+  color: #cc0000;
+  transform: scale(1.1);
+}
+
+.loading-text {
+  text-align: center;
+  padding: 40px;
+  color: #888;
+}
+
+/* Pagination Style reuse from dashboard or your existing style */

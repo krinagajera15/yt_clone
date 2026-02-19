@@ -1,91 +1,73 @@
-/* Overlay: dark transparent background */
+/* ૧. મોડલ ઓવરલે (બેકગ્રાઉન્ડ બ્લર અને સેન્ટરિંગ) */
 .create-channel-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #00000099;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 2000;
-  animation: fadeIn 0.2s ease;
-}
-.create-channel-modal.dark{
-
-  background-color: #181818;
-  color: white;
-}
-.create-channel-modal.light{
-
-  background-color: white;
-  color: #181818;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
 }
 
-/* Modal Box */
+/* ૨. મોડલ કાર્ડ સ્ટાઇલ */
 .create-channel-modal {
-  background-color: #181818;
-  padding: 24px;
-  border-radius: 12px;
-  width: 400px;
-  max-width: 90%;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  animation: slideDown 0.3s ease;
-  color: #fff;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-color, #ffffff);
+  color: var(--text-color, #0f0f0f);
+  width: 100%;
+  max-width: 400px;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  animation: modalFadeIn 0.3s ease-out;
 }
 
-/* Modal Header */
-.create-channel-modal h2 {
-  margin: 0;
-  color: white;
+@keyframes modalFadeIn {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ૩. ટાઈટલ */
+.chenl-title-class {
+  color: black;
+  margin-bottom: 25px;
   font-size: 22px;
   font-weight: 600;
-  text-align: center;
+}
+.create-channel-modal.dark .chenl-title-class{
+  color: white;
 }
 
-.create-channel-modal.light h2{
-
-  background-color: white;
-  color: #181818;
-}
-/* Image Upload */
+/* ૪. ઈમેજ અપલોડ સેક્શન */
 .image-upload {
   display: flex;
   flex-direction: column;
-  gap: 8px;
   align-items: center;
-}
-.placeholder{
-  color: white;
-}
-.create-channel-modal.light .placeholder{
-  color: rgb(56, 55, 55);
+  margin-bottom: 20px;
 }
 
-.create-channel-modal.light input[type="file"]{
-  color: #181818;
-}
 .image-preview {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  overflow: hidden;
-  background-color: #2a2a2a;
+  border: 2px dashed #ccc;
   display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: 12px;
-  color: #888;
+  align-items: center;
+  overflow: hidden;
+  margin-bottom: 15px;
+  background-color: var(--hover-bg, #f2f2f2);
+  cursor: pointer;
+  transition: border-color 0.3s;
 }
 
-.create-channel-modal.light .image-preview{
-  background-color: #e0dfdf;
-  color: #313131;
+.image-preview:hover {
+  border-color: #d40606;
 }
 
 .image-preview img {
@@ -94,83 +76,82 @@
   object-fit: cover;
 }
 
-.image-upload input[type="file"] {
-  cursor: pointer;
-  color: #ddd6d6;
+.placeholder {
+  font-size: 12px;
+  color: #606060;
+  text-align: center;
+  padding: 5px;
 }
 
-/* Text Input */
+/* ૫. ફાઈલ ઇનપુટ સ્ટાઇલ */
+.image-upload input[type="file"] {
+  font-size: 12px;
+  width: 200px;
+}
+
+/* ૬. ટેક્સ્ટ ઇનપુટ (Channel Name) */
 .create-channel-modal input[type="text"] {
   width: 100%;
-  padding: 10px 14px;
+  padding: 12px 15px;
   border-radius: 8px;
-  border: 1px solid #333;
-  background-color: #121212;
-  color: #fff;
-  font-size: 14px;
+  border: 1px solid #ccc;
+  background-color: transparent;
+  color: inherit;
+  font-size: 15px;
+  margin-bottom: 20px;
   outline: none;
-  transition: border 0.2s ease, box-shadow 0.2s ease;
-}
-.create-channel-modal.light input[type="text"]{
-  background-color: #e0dfdf;
-  color: #000000;
-
+  transition: border-color 0.3s;
 }
 
 .create-channel-modal input[type="text"]:focus {
-  border-color: #5c6bc0;
-  box-shadow: 0 0 6px rgba(92, 107, 192, 0.5);
+  border-color: #d40606;
 }
 
-/* Buttons */
-.create-channel-modal button {
-  padding: 10px 16px;
-  border-radius: 8px;
+/* ૭. બટન્સ સ્ટાઇલ */
+.createchenal-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #d40606; /* YouTube Blue */
+  color: white;
   border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 15px;
   cursor: pointer;
+  margin-bottom: 10px;
+  transition: background 0.3s;
+}
+
+.createchenal-btn:hover {
+  background-color: #a70505;
+}
+
+.cancel-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: transparent;
+  color: var(--text-color);
+  border: 1px solid #ccc;
+  border-radius: 25px;
   font-weight: 500;
-  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
-.create-channel-modal button:hover {
-  transform: scale(1.02);
+.cancel-btn:hover {
+  background-color: var(--hover-bg, #f2f2f2);
 }
 
-/* Submit Button */
-.create-channel-modal button:first-of-type {
-  background-color: #f14b4b;
-  color: #fff;
+/* ૮. ડાર્ક મોડ એડજસ્ટમેન્ટ */
+.create-channel-modal.dark {
+  background-color: #212121;
+  border: 1px solid #3f3f3f;
 }
 
-.create-channel-modal button:first-of-type:hover {
-  background-color: #e62323;
+.create-channel-modal.dark input[type="text"] {
+  border-color: #3f3f3f;
 }
 
-/* Cancel Button */
-.create-channel-modal .cancel-btn {
-  background-color: #333;
-  color: #fff;
-}
-
-.create-channel-modal .cancel-btn:hover {
-  background-color: #444;
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideDown {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Responsive */
-@media (max-width: 500px) {
-  .create-channel-modal {
-    width: 90%;
-    padding: 20px;
-  }
+.create-channel-modal.dark .placeholder {
+  color: #aaa;
 }

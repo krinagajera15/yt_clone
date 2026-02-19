@@ -1,0 +1,30 @@
+.admin-navbar {
+  background: #ffffff;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.admin-nav-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.admin-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.admin-profile-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 20px;
+  border-left: 1px solid #eee;
+}

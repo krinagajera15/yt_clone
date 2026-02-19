@@ -1,0 +1,71 @@
+.admin-container {
+  display: flex;
+  height: 100vh;
+  background: #f5f6fa;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.admin-main-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* ===== Stats Cards ===== */
+.admin-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  padding: 30px;
+}
+
+.admin-stat-card {
+  background: #ffffff;
+  padding: 22px 25px;
+  border-radius: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.admin-stat-card:hover {
+  transform: translateY(-4px);
+}
+
+.admin-stat-card p {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+.admin-stat-card h2 {
+  font-size: 30px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.stat-icon {
+  color: #d1d5db;
+}
+
+/* Card Top Colors */
+.blue { border-top: 5px solid #3b82f6; }
+.red { border-top: 5px solid #ff0000; }
+.green { border-top: 5px solid #10b981; }
+
+/* ===== Chart Section ===== */
+.admin-chart-section {
+  background: #ffffff;
+  margin: 0 30px 30px;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.admin-chart-section h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #111827;
+}

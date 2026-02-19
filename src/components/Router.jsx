@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../pages/Home";
 import Watch from "../pages/Watch";
-import AdminDashboard from "../pages/AdminDashboard";
 import AddVideo from "../pages/AddVideo";
 import ManageVideos from "../pages/ManageVideos";
 import NotFound from "../pages/NotFound";
@@ -11,7 +10,13 @@ import Shorts from "../pages/Shorts";
 import { AuthGuard } from "../guard/AuthGuard";
 import AddShorts from "../pages/AddShorts";
 import { Subscriptionpage } from "../pages/SubscriptionPage";
-import Dashboard from "./Admin/Dashbord";
+import UserDetails from "./User/Userdetails";
+// import UserManager from "./Admin/UserData";
+import Dashboardadmin from "../pages/Admin/DashbordAdmin";
+import ChannelAdmin from "./Admin/ChanelData";
+import ManageVideoAdmin from "./Admin/Managevideo";
+import UserManager from "./Admin/UserData";
+import { Adminauthguard } from "../guard/AdminAuthGuard";
 
 // ✅ Named export must match import
 export const router = createBrowserRouter([
@@ -38,6 +43,12 @@ export const router = createBrowserRouter([
      
     ],
   },
+
   { path: "*", element: <NotFound /> },
-  { path: "/dashbord", element: <Dashboard /> },
+   { path: "/userdetails", element: <UserDetails /> },
+    { path: "/dashbordadmin", element: <Dashboardadmin /> },
+      { path: "/chanelpage", element: <ChannelAdmin/> },
+      { path: "/userdata", element: <UserManager /> },
+      { path: "/manageadminvideo", element: <ManageVideoAdmin /> },
+  
 ]);

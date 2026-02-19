@@ -29,7 +29,7 @@ const Sidebar = () => {
         <MdHistory className="s-icon" /> <span>History</span>
       </div>
       <div className="sidebar-item">
-        <MdAddCircleOutline className="s-icon" /> <span>Add Video</span>
+      <NavLink to={"/userdetails"}><MdAddCircleOutline className="s-icon" /> <span>Your Videos</span></NavLink>
       </div>
     </div>
   );

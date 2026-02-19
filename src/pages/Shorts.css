@@ -2,10 +2,8 @@
 body {
   margin: 0;
   padding: 0;
-  /* index.css માંથી કલર લેશે */
   background-color: var(--bg-color);
   color: var(--text-color);
-  /* overflow: hidden; */
   font-family: Arial, sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -16,26 +14,23 @@ body {
   width: 100%;
   overflow-y: auto;
   scroll-snap-type: y mandatory;
-  /* થીમ મુજબ બેકગ્રાઉન્ડ બદલાશે */
   background-color: var(--bg-color);
+  scrollbar-width: none;
 }
 
-/* Scrollbar Hide */
 .shorts-wrapper::-webkit-scrollbar {
   display: none;
 }
 
 /* ===== SINGLE SHORT ===== */
 .short-card {
-  height: 90%;
+  height: 100vh; 
   width: 100%;
   scroll-snap-align: start;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  flex-direction: column;
-  margin-bottom: 60px;
 }
 
 /* ===== VIDEO CONTAINER ===== */
@@ -46,12 +41,10 @@ body {
   max-width: 500px;
   position: relative;
   overflow: hidden;
-  /* વિડિયો પાછળ હંમેશા બ્લેક રાખવું સારું લાગે છે */
   background: black;
-  border-radius: 12px; /* થોડું મોર્ડન લુક માટે */
+  border-radius: 12px;
 }
 
-/* ===== VIDEO ===== */
 .short-video-container iframe {
   width: 100%;
   height: 100%;
@@ -61,13 +54,12 @@ body {
 /* ===== RIGHT SIDE ICONS ===== */
 .short-right-sidebar {
   position: absolute;
-  margin-left: 350px;
-  margin-top: 30px;
+  /* વિડિયોની જમણી બાજુ પરફેક્ટ રાખવા માટે */
+  right: calc(50% - 310px); 
+  bottom: 100px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  /* થીમ મુજબ ટેક્સ્ટ કલર */
-  color: var(--text-color);
+  gap: 20px;
   z-index: 10;
 }
 
@@ -76,75 +68,98 @@ body {
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+  /* થીમ મુજબ લખાણનો કલર બદલાશે */
+  color: var(--text-color); 
 }
 
 .short-icon-circle {
-  width: 52px;
-  height: 52px;
-  /* થીમ મુજબ હોવર કલરનો ઉપયોગ આઈકોન બેકગ્રાઉન્ડ તરીકે */
+  width: 50px;
+  height: 50px;
   background: var(--hover-bg);
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: transform 0.2s ease;
+  transition: all 0.2s ease;
+  margin-bottom: 5px;
+}
+
+/* 🔥 થીમ મુજબ લાઈક/ડિસ્લાઈક કલર લોજિક */
+.active-like {
+  background: #3ea6ff !important; /* Blue background */
+}
+
+/* એક્ટિવ હોય ત્યારે આઈકોનનો કલર થીમ મુજબ વ્હાઈટ કે બ્લેક થશે */
+.active-like svg, .active-dislike svg {
+  color: var(--text-color) !important;
+}
+
+.active-dislike {
+  background: #ff4e4e !important; /* Red background */
 }
 
 .short-icon-circle:hover {
   transform: scale(1.1);
 }
 
-/* આઈકોન અંદરનો કલર */
-.short-icon-circle i, .short-icon-circle svg {
+/* આઈકોન અંદરનો સામાન્ય કલર */
+.short-icon-circle svg {
   color: var(--text-color);
-}
-
-.short-liked {
-  background: #ff4e4e; /* લાઈક માટે થોડો બ્રાઈટ લાલ */
-}
-
-.short-disliked {
-  background: #69bcd1;
 }
 
 /* ===== BOTTOM INFO ===== */
 .short-info-overlay {
   position: absolute;
-  bottom: 40px;
-  left: 20px;
-  /* થીમ મુજબ ટેક્સ્ટ કલર */
-  color: var(--text-color);
+  bottom: 100px;
+  /* વિડિયોની ડાબી બાજુ સેટ કરવા */
+  left: 50px;
   z-index: 10;
-  text-shadow: 0px 2px 4px rgba(0,0,0,0.5); /* વીડિયો પર ટેક્સ્ટ વંચાય તે માટે */
+  width: 300px;
+  /* થીમ મુજબ ટાઈટલ અને નામનો કલર બદલાશે */
+  color: var(--text-color);
 }
 
 .short-profile-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
-.short-avatar-placeholder {
-  width: 42px;
-  height: 42px;
-  background: #888;
+.short-avatar {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
+  overflow: hidden;
+  /* થીમ મુજબ બોર્ડર બદલાશે */
+  border: 1px solid var(--text-color);
+  background: #888;
 }
 
-.short-subscribe-button {
-  background: #cc0000; /* YouTube Red */
+.short-username {
+  font-weight: bold;
+  font-size: 15px;
+  color: var(--text-color);
+}
+
+.short-subscribe-btn {
+  /* Subscribe બટન YouTube જેવું બ્રાઈટ રેડ રાખવું સારું લાગે, 
+     પણ જો થીમ મુજબ કરવું હોય તો background: var(--text-color); color: var(--bg-color); કરી શકાય */
+  background: #cc0000; 
   border: none;
-  padding: 8px 18px;
+  padding: 6px 15px;
   border-radius: 20px;
-  color: white; /* આ હંમેશા વ્હાઈટ જ રહેશે */
+  color: white; 
   font-weight: bold;
   cursor: pointer;
+  font-size: 13px;
 }
 
-.short-title {
+.short-title-text {
   font-size: 14px;
-  margin-top: 8px;
+  margin-top: 10px;
   color: var(--text-color);
+  /* શેડો હટાવી દીધો અથવા થીમ મુજબ એડજસ્ટ કર્યો */
+  text-shadow: 1px 1px 2px var(--bg-color);
 }
 
 /* ===== MOBILE ===== */
@@ -152,19 +167,19 @@ body {
   .short-video-container {
     width: 100%;
     height: 100vh;
-    aspect-ratio: auto;
     border-radius: 0;
+    max-width: 100%;
   }
 
   .short-right-sidebar {
     right: 15px;
-    bottom: 120px;
-    margin-left: 0; /* મોબાઈલમાં માર્જિન કાઢી નાખ્યું */
-    margin-top: 0;
+    bottom: 150px;
   }
-  
-  /* મોબાઈલમાં વિડિયો ફૂલ સ્ક્રીન હોય ત્યારે ટેક્સ્ટ વ્હાઈટ રાખવો વધુ સારો લાગે છે */
-  .short-info-overlay, .short-right-sidebar {
-    color: white;
+
+  .short-info-overlay {
+    left: 20px;
+    bottom: 100px;
+    /* મોબાઈલમાં ફૂલ વિડિયો પર વ્હાઈટ ટેક્સ્ટ વધુ સારો લાગે છે */
+    color: white; 
   }
 }

@@ -1,0 +1,85 @@
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th {
+  text-align: left;
+  padding: 15px;
+  background-color: #ec2b2b;
+  border-bottom: 2px solid #eee;
+  color: white;
+}
+
+.admin-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #f1f1f1;
+  vertical-align: middle;
+}
+
+.video-thumb-img {
+  width: 110px;
+  height: 65px;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.video-title-cell {
+  font-weight: 500;
+  max-width: 300px;
+  color: #333;
+}
+
+.action-cell {
+  position: relative;
+}
+
+.menu-icon {
+  cursor: pointer;
+  font-size: 20px;
+  color: #666;
+  padding: 5px;
+  border-radius: 50%;
+}
+
+.menu-icon:hover {
+  background-color: #f0f0f0;
+}
+
+/* Three Dot Menu Styling */
+.action-menu {
+  position: absolute;
+  right: 40px;
+  top: 10px;
+  background: white;
+  border: 1px solid #eee;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  z-index: 100;
+  width: 110px;
+  overflow: hidden;
+}
+
+.action-item {
+  display: flex;
+  align-items: center;
+  color: #ff0000;
+  gap: 10px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.action-item:hover {
+  background-color: #f5f5f5;
+}
+
+.action-item.delete {
+  color: #ff0000;
+}
+
+.action-item.delete:hover {
+  background-color: #fff0f0;
+}

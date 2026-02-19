@@ -1,21 +1,23 @@
 import React, { useContext, useEffect, useState } from "react";
 import VideoCard from "../components/VideoCard";
+import VoiceSearchModal from "../components/VoiceSearchModal";
 import "./Home.css";
 import Modecontext from "../Context/ModeContext";
 
 const Home = () => {
   const [videos, setVideos] = useState([]);
-  
-  // થીમ મેળવવા માટે Context નો ઉપયોગ કરો
-  const ctx = useContext(Modecontext);
-  const theme = ctx?.mode || 'light'; // default 'light'
+  const [isVoiceOpen, setIsVoiceOpen] = useState(false);
+  const [voiceSearch, setVoiceSearch] = useState("");
 
-  // આખા પેજની થીમ બદલવા માટે useEffect
+  const ctx = useContext(Modecontext);
+  const theme = ctx?.mode || "light";
+
   useEffect(() => {
     document.body.className = theme;
   }, [theme]);
 
-  const loggedInUserData = JSON.parse(localStorage.getItem("loginData")) || {};
+  const loggedInUserData =
+    JSON.parse(localStorage.getItem("loginData")) || {};
 
   useEffect(() => {
     fetch("https://697343e3b5f46f8b5826ae3f.mockapi.io/videos")
@@ -37,20 +39,36 @@ const Home = () => {
     });
   };
 
+  // ✅ Voice filter logic
+  const filteredVideos = videos.filter((video) =>
+    video.title.toLowerCase().includes(voiceSearch.toLowerCase())
+  );
+
   return (
     <div className={`home ${theme}`}>
       <h2>Latest Videos</h2>
+
       <div className="video-grid">
-        {videos.map((video) => (
-          <VideoCard
-            key={video.id}
-            video={video}
-            isAdmin={loggedInUserData?.role === "admin"}
-            onEdit={() => handleEdit(video.id)}
-            onDelete={() => handleDelete(video.id)}
-          />
-        ))}
+        {filteredVideos.length > 0 ? (
+          filteredVideos.map((video) => (
+            <VideoCard
+              key={video.id}
+              video={video}
+              isAdmin={loggedInUserData?.role === "admin"}
+              onEdit={() => handleEdit(video.id)}
+              onDelete={() => handleDelete(video.id)}
+            />
+          ))
+        ) : (
+          <p>No videos found.</p>
+        )}
       </div>
+
+      <VoiceSearchModal
+        isOpen={isVoiceOpen}
+        onClose={() => setIsVoiceOpen(false)}
+        onVoiceSearch={(text) => setVoiceSearch(text)}
+      />
     </div>
   );
 };

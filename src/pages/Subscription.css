@@ -1,64 +1,136 @@
+/* Main Container */
+:root {
+--danger-bg: #cc0000;
+--danger-hover: #990000;
+--danger-text: #ffffff;
+}
+body.light {
+  --danger-bg: #cc0000;
+--danger-hover: #990000;
+--danger-text: #ffffff;
+}
+body.dark {
+
+  --danger-bg: #ff3b3b;
+--danger-hover: #cc0000;
+--danger-text: #ffffff;
+}
+
+.unsubscribe-btn {
+  padding: 6px 12px;
+  background: var(--danger-bg);
+  color: var(--danger-text);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.unsubscribe-btn:hover {
+  background: var(--danger-hover);
+}
+
+.subscription-list {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Heading */
+.subscription-list h2 {
+  color:var(--text-color);
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+/* Table Styling */
+.subscription-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.subscription-table thead {
+  background: var(--hover-bg);
+}
+
+.subscription-table th,
+.subscription-table td {
+  padding: 12px 15px;
+  text-align: center;
+}
+
+.subscription-table th {
+  border-bottom: 2px solid var(--hover-bg);
+}
+
+.subscription-table td {
+  border-bottom: 1px solid var(--hover-bg);
+}
+
+.subscription-table tbody tr:hover {
+  background: var(--hover-bg);
+}
+
+/* No Subscription Message */
+.no-subs-message {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 16px;
+}
+
+/* Sign In Section */
 .main-subscript-class {
-    height: calc(100vh - 56px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    text-align: center;
-    gap: 12px;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg-color);
+}
+
+.main-subscript-description-class {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.subscript-detail-class {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+/* Buttons */
+.btn-signin-class {
+  padding: 10px 20px;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+/* Responsive */
+@media (max-width: 600px) {
+  .subscription-list {
+    margin: 20px;
+    padding: 15px;
   }
-  
-  .main-subscript-description-class {
-    font-size: 26px;
-    font-weight: 600;
-    margin-bottom: 6px;
-  }
-  
-  .subscript-detail-class {
-    font-size: 16px;
-    font-weight: 400;
-    color: var(--text-muted, #888);
-    margin-bottom: 20px;
-  }
-  
-  .btn-signin-class {
-    padding: 10px 22px;
-    font-size: 14px;
-    font-weight: 500;
-    border-radius: 20px;
-    border: 1px solid var(--primary-color, #ff3e3e);
-    background-color: transparent;
-    color: var(--primary-color, #ff3e3e);
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  
-  .btn-signin-class:hover {
-    background-color: var(--primary-color, #ff3e3e);
-    color: #fff;
-  }
-  .subscription-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 16px;
-  }
-  
+
   .subscription-table th,
   .subscription-table td {
-    border: 1px solid var(--border-color);
-    padding: 10px;
-    text-align: left;
-    color: var(--text-color);
+    padding: 8px;
+    font-size: 14px;
   }
-  
-  .subscription-table th {
-    background-color: var(--hover-bg);
-    font-weight: 600;
+
+  .main-subscript-description-class {
+    font-size: 22px;
   }
-  
-  .subscription-table tr:hover {
-    background-color: var(--hover-bg);
+
+  .subscript-detail-class {
+    font-size: 16px;
   }
-  
+}

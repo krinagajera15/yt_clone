@@ -14,7 +14,8 @@ const Login = () => {
   // કયા પેજ પર પાછા જવું છે તે નક્કી કરો (Default હોમ પેજ "/")
   const goBackTo = location.state?.from || "/";
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     setError("");
 
     if (!email || !password) {
@@ -26,15 +27,22 @@ const Login = () => {
     const adminEmail = "ytadmin@gmail.com";
     const adminPassword = "yt@123";
 
-    if (email === adminEmail && password === adminPassword) {
-      // Admin login success
-      localStorage.setItem(
-        "loginData",
-        JSON.stringify({ role: "admin", email })
-      );
-      navigate("/dashbord"); // Admin ને તો ડેશબોર્ડ પર જ મોકલીશું
-      return;
-    }
+   if (email === adminEmail && password === adminPassword) {
+  localStorage.setItem(
+    "loginData",
+    JSON.stringify({
+      role: "admin",
+      email,
+      name: "YT Admin"   // 🔥 Admin name store
+    })
+  );
+
+  // Optional: direct admin name key (easy access)
+  localStorage.setItem("adminName", "YT Admin");
+
+  navigate("/dashbordadmin"); // ✅ correct admin dashboard route
+  return;
+}
 
     try {
       // Normal user login
@@ -72,6 +80,7 @@ const Login = () => {
         <h2>Hello Again,</h2>
         <p>Welcome back, let's get started!</p>
 
+        <form onSubmit={handleLogin}>
         <input
           type="email"
           placeholder="Email"
@@ -90,9 +99,10 @@ const Login = () => {
 
         {error && <p className="error">{error}</p>}
 
-        <button className="login-btn" onClick={handleLogin}>
+        <button className="login-btn" type="submit">
           Login
         </button>
+      </form>
 
         <p className="signup-text">
           Don't have an account?{" "}
@@ -102,6 +112,7 @@ const Login = () => {
         </p>
       </div>
     </div>
+  
   );
 };
 
